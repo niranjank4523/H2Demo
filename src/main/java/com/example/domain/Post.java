@@ -1,6 +1,7 @@
 package com.example.domain;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,15 +23,16 @@ public class Post {
     @Column(columnDefinition = "text")
     private String body;
 
-    @Column(columnDefinition = "TIMESTAMP")
-    private Date postedOn;
+    @Column(name = "created_date", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Temporal(TemporalType.DATE)
+    private Date createdDate;
     //Author
     @ManyToOne
     private Author author;
 
     @ManyToMany
     @JoinTable(joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id"),
-                inverseJoinColumns = @JoinColumn(name = "reader_id", referencedColumnName = "id"))
+            inverseJoinColumns = @JoinColumn(name = "reader_id", referencedColumnName = "id"))
     private List<PostReader> postReaderList = new ArrayList<PostReader>();
 
     @OneToOne
@@ -69,14 +71,6 @@ public class Post {
         this.body = body;
     }
 
-    public Date getPostedOn() {
-        return postedOn;
-    }
-
-    public void setPostedOn(Date postedOn) {
-        this.postedOn = postedOn;
-    }
-
     public Author getAuthor() {
         return author;
     }
@@ -99,5 +93,14 @@ public class Post {
 
     public void setPostDetails(PostDetails postDetails) {
         this.postDetails = postDetails;
+    }
+
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 }

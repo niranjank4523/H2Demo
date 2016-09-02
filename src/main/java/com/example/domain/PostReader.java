@@ -16,7 +16,7 @@ public class PostReader {
     private String firstName;
     private String lastName;
 
-    @ManyToMany(mappedBy = "readerList")
+    @ManyToMany(mappedBy = "postReaderList")
     private List<Post> postList = new ArrayList<Post>();
 
     public Long getId() {

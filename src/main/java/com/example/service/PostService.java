@@ -11,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,13 +33,12 @@ public class PostService {
 
         Post post = new Post("Dummy Post title");
         post.setAuthor(author);
-        post.setPostedOn(new Date());
         post.setBody("Here goes the Body for the Dummy Post!!!");
         return postRepository.save(post);
     }
 
     public Post getLatestPost() {
-        return postRepository.findFirstByOrderByPostedOnDesc();
+        return postRepository.findFirstByOrderByCreatedDateDesc();
     }
 
     public List<Post> getPostByTitleQuery(String title) {
@@ -52,7 +50,7 @@ public class PostService {
     }
 
     public List<Post> getPostByPage() {
-        Pageable pageable = new PageRequest(0,2,new Sort(Sort.Direction.DESC,"id"));
+        Pageable pageable = new PageRequest(0, 2, new Sort(Sort.Direction.DESC, "id"));
         Page<Post> postPage = postRepository.findAll(pageable);
         return postPage.getContent();
     }
@@ -61,14 +59,14 @@ public class PostService {
         Author author = new Author("Steve", "Jobs");
         authorRepository.save(author);
 
-        Post post = postRepository.findFirstByOrderByPostedOnDesc();
+        Post post = postRepository.findFirstByOrderByCreatedDateDesc();
         post.setAuthor(author);
 
         return postRepository.save(post);
     }
 
     public void deletePost() {
-        Post post = postRepository.findFirstByOrderByPostedOnDesc();
+        Post post = postRepository.findFirstByOrderByCreatedDateDesc();
         postRepository.delete(post);
     }
 }

@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface PostRepository extends JpaRepository<Post, Long> {
     //Dynamic Finder
-    Post findFirstByOrderByPostedOnDesc();
+    Post findFirstByOrderByCreatedDateDesc();
 
 
     //Using Query annotation

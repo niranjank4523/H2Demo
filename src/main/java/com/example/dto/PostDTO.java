@@ -19,7 +19,8 @@ public class PostDTO {
         this.id = post.getId();
         this.title = post.getTitle();
         this.body = post.getBody();
-        this.postedOn = post.getPostedOn().toString();
+        if (post.getCreatedDate() != null)
+            this.postedOn = post.getCreatedDate().toString();
         this.authorDTO = new AuthorDTO(post.getAuthor());
     }
 
