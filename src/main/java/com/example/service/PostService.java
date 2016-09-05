@@ -1,8 +1,11 @@
 package com.example.service;
 
+import com.example.command.PostCO;
 import com.example.domain.Author;
 import com.example.domain.Post;
+import com.example.domain.PostDetails;
 import com.example.repository.AuthorRepository;
+import com.example.repository.PostDetailsRepository;
 import com.example.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,15 +28,23 @@ public class PostService {
     @Autowired
     private AuthorRepository authorRepository;
 
+    @Autowired
+    private PostDetailsRepository postDetailsRepository;
 
-    public Post createPost() {
-        //Using basic CRUD implementation
-        Author author = new Author("Bill", "Gates");
+    public Post createPost(PostCO postCO) {
+        Author author = new Author(postCO.getAuthorFirstName(), postCO.getAuthorLastName());
         authorRepository.save(author);
 
-        Post post = new Post("Dummy Post title");
+        PostDetails postDetails = new PostDetails();
+        postDetails.setUrl(postCO.getPostUrl());
+        postDetails.setLength(postCO.getPostLength());
+        postDetailsRepository.save(postDetails);
+
+        Post post = new Post(postCO.getPostTitle());
         post.setAuthor(author);
-        post.setBody("Here goes the Body for the Dummy Post!!!");
+        post.setPostDetails(postDetails);
+        post.setBody(postCO.getPostBody());
+
         return postRepository.save(post);
     }
 

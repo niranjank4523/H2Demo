@@ -1,12 +1,11 @@
 package com.example.controller;
 
+import com.example.command.PostCO;
 import com.example.domain.Post;
 import com.example.dto.PostDTO;
 import com.example.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +18,12 @@ public class JpaController {
     @Autowired
     private PostService postService;
 
-    @RequestMapping(value = "/create")
-    public PostDTO create() {
-        return new PostDTO(postService.createPost());
+    @RequestMapping(value = "/create",method = RequestMethod.POST)
+    public PostDTO create(@RequestBody PostCO postCO) {
+        return new PostDTO(postService.createPost(postCO));
     }
 
-    @RequestMapping(value = "/getLatestPost")
+    @RequestMapping(value = "/getLatestPost",method = RequestMethod.GET)
     public PostDTO getLatestPost() {
         return new PostDTO(postService.getLatestPost());
     }

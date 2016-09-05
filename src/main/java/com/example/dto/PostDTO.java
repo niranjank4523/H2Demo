@@ -2,8 +2,6 @@ package com.example.dto;
 
 import com.example.domain.Post;
 
-import java.util.Date;
-
 /**
  * Created by niranjan on 2/9/16.
  */
